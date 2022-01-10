@@ -1,4 +1,4 @@
-# pokemon-api-example
+# pokemon-vue_app
 
 ## Project setup
 ```
