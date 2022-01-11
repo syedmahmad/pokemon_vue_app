@@ -1,18 +1,25 @@
 <template>
   <div class="main">
-   <div v-for="(singlepoke, index) in allPokemons" :key="index" class="inner">
+   <div v-for="(singlepoke, index) in pokemon" :key="index" class="inner">
      <p>{{singlepoke.name}}</p>
-     <img :src="allSinglePokemons[index]['generation-iii']['emerald'].front_default" alt="">
+     <img :src="_3rdsinglePokemon[index]" alt="">
    </div>
 </div>
 </template>
 
 <script>
-import { mapGetters} from 'vuex'
-
+import { mapActions, mapState } from 'vuex'
 export default {
   name: "Pokemon3",
-  computed: mapGetters(['allPokemons', 'allSinglePokemons']),
+  computed: mapState(['pokemon', '_3rdsinglePokemon']),
+  methods: {
+    ...mapActions([ 'Get3rdPokemonsDetails']),
+  },
+  created() {
+    if(this._3rdsinglePokemon.length == 0){
+    this.Get3rdPokemonsDetails();
+    }
+  },
 };
 </script>
 

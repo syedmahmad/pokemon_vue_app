@@ -1,18 +1,25 @@
 <template>
   <div class="main">
-   <div v-for="(singlepoke, index) in allPokemons" :key="index" class="inner">
+   <div v-for="(singlepoke, index) in pokemon" :key="index" class="inner">
      <p>{{singlepoke.name}}</p>
-     <img :src="allSinglePokemons[index]['generation-iv']['diamond-pearl'].front_default" alt="">
+     <img :src="_4thsinglePokemon[index]" alt="">
    </div>
 </div>
 </template>
 
 <script>
-import { mapGetters} from 'vuex'
-
+import { mapActions, mapState } from 'vuex'
 export default {
   name: "Pokemon4",
-  computed: mapGetters(['allPokemons', 'allSinglePokemons']),
+  computed: mapState(['pokemon', '_4thsinglePokemon']),
+  methods: {
+    ...mapActions([ 'Get4thPokemonsDetails']),
+  },
+  created() {
+    if(this._4thsinglePokemon.length == 0){
+    this.Get4thPokemonsDetails();
+    }
+  },
 };
 </script>
 

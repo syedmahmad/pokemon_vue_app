@@ -1,27 +1,30 @@
 <template>
-<div class="main">
-   <div v-for="(singlepoke, index) in allPokemons" :key="index" class="inner">
+<div class="flex flex-row m-12">
+   <div v-for="(singlepoke, index) in pokemon" :key="index" class="inner">
      <p>{{singlepoke.name}}</p>
-     <img :src="allSinglePokemons[index]['generation-i']['red-blue'].front_default" alt="">
+     <img :src="_1stsinglePokemon[index]" alt="">
    </div>
 </div>
 </template>
 
 <script>
-import { mapGetters} from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'Pokemon',
-  computed: mapGetters(['allPokemons', 'allSinglePokemons']),
+  computed: mapState(['pokemon', '_1stsinglePokemon']),
+  methods: {
+    ...mapActions([ 'Get1stPokemonsDetails']),
+  },
+  created() {
+    if(this._1stsinglePokemon.length == 0){
+    this.Get1stPokemonsDetails();
+    }
+  },
 }
 </script>
 
 <style scoped>
-.main{
-  display: flex;
-  flex-direction: row;
-  margin: 50px;
-}
 .inner{
   width: 150px;
   border: 1px solid black;

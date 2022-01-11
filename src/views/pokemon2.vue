@@ -1,17 +1,25 @@
 <template>
  <div class="main">
-   <div v-for="(singlepoke, index) in allPokemons" :key="index" class="inner">
+   <div v-for="(singlepoke, index) in pokemon" :key="index" class="inner">
      <p>{{singlepoke.name}}</p>
-     <img :src="allSinglePokemons[index]['generation-ii']['crystal'].front_default" alt="">
+     <img :src="_2ndsinglePokemon[index]" alt="">
    </div>
 </div>
 </template>
 
 <script>
-import { mapGetters} from 'vuex'
+import { mapActions, mapState } from 'vuex'
 export default {
   name: "Pokemon2",
-  computed: mapGetters(['allPokemons', 'allSinglePokemons']),
+  computed: mapState(['pokemon', '_2ndsinglePokemon']),
+  methods: {
+    ...mapActions([ 'Get2ndPokemonsDetails']),
+  },
+  created() {
+    if(this._2ndsinglePokemon.length == 0){
+    this.Get2ndPokemonsDetails();
+    }
+  },
 };
 </script>
 
